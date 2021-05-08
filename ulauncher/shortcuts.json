@@ -1,0 +1,52 @@
+{
+    "f51db8e8-34b1-4fe7-a47a-d0f6e5d9cc7d": {
+        "id": "f51db8e8-34b1-4fe7-a47a-d0f6e5d9cc7d",
+        "name": "Google Search",
+        "keyword": "g",
+        "cmd": "https://google.com/search?q=%s",
+        "icon": "/usr/share/ulauncher/media/google-search-icon.png",
+        "is_default_search": true,
+        "run_without_argument": false,
+        "added": 1617478824.8851554
+    },
+    "5989b7e9-0288-4b2f-85b5-b2e7852256a0": {
+        "id": "5989b7e9-0288-4b2f-85b5-b2e7852256a0",
+        "name": "Stack Overflow",
+        "keyword": "so",
+        "cmd": "http://stackoverflow.com/search?q=%s",
+        "icon": "/usr/share/ulauncher/media/stackoverflow-icon.svg",
+        "is_default_search": true,
+        "run_without_argument": false,
+        "added": 1617478824.8851693
+    },
+    "639886e4-c7b2-45df-8088-3a96198f86f6": {
+        "id": "639886e4-c7b2-45df-8088-3a96198f86f6",
+        "name": "Wikipedia",
+        "keyword": "wiki",
+        "cmd": "https://en.wikipedia.org/wiki/%s",
+        "icon": "/usr/share/ulauncher/media/wikipedia-icon.png",
+        "is_default_search": true,
+        "run_without_argument": false,
+        "added": 1617478824.8851788
+    },
+    "adc867ec-6713-4964-a8e5-d85ab6536740": {
+        "id": "adc867ec-6713-4964-a8e5-d85ab6536740",
+        "name": "YouTube",
+        "keyword": "yt",
+        "cmd": "https://www.youtube.com/results?search_query=%s",
+        "icon": "~/.icons/ulauncher/youtube-512.png",
+        "is_default_search": true,
+        "run_without_argument": false,
+        "added": 1617881315.934002
+    },
+    "675c94f6-0b4f-4056-ad45-0531460854a4": {
+        "id": "675c94f6-0b4f-4056-ad45-0531460854a4",
+        "name": "MyAnimeList",
+        "keyword": "mal",
+        "cmd": "https://myanimelist.net/search/all?q=%s&cat=all",
+        "icon": "~/.icons/ulauncher/MAL.png",
+        "is_default_search": false,
+        "run_without_argument": false,
+        "added": 1617889825.7438571
+    }
+}

@@ -1,0 +1,1 @@
+noremap <space>l ggi\documentclass{article}<CR>\usepackage[bookmarks]{hyperref}<CR>\usepackage[backend=biber]{biblatex}<CR>\addbibresource{uni.bib}<CR>\title{\LaTeX}<CR>\author{Ahadu Kebede}<CR>\begin{document}<CR>\maketitle<CR><CR><CR><CR><CR><CR><CR>\printbibliography<CR>\end{document}<ESC>kkkkkk
