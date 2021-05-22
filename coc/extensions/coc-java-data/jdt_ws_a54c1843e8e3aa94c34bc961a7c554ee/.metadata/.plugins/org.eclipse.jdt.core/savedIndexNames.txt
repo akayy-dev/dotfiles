@@ -1,3 +1,0 @@
-INDEX VERSION 1.131+/home/ahaduk/.config/coc/extensions/coc-java-data/jdt_ws_a54c1843e8e3aa94c34bc961a7c554ee/.metadata/.plugins/org.eclipse.jdt.core
-3842426239.index
-1120479887.index

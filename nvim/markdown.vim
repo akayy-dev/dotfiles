@@ -1,2 +1,0 @@
-iabbrev @@ ahadukebede@gmail.com
-
