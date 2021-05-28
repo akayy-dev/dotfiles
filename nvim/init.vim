@@ -1,15 +1,4 @@
-"vim markdown function (REQUIRED)
-
-function! BuildComposer(info)
-  if a:info.status != 'unchanged' || a:info.force
-    if has('nvim')
-      !cargo build --release --locked
-    else
-      !cargo build --release --locked --no-default-features --features json-rpc
-    endif
-  endif
-endfunction
-
+" Plugin Directory
 call plug#begin('~/.vim/plugins/')
 
 " Airline
@@ -25,10 +14,6 @@ Plug 'ryanoasis/vim-devicons'
 
 " Snazzy Theme
 Plug 'connorholyday/vim-snazzy'
-
-" Markdown
-Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
-Plug 'dhruvasagar/vim-table-mode'
 
 " Git Plugin
 Plug 'tpope/vim-fugitive'
@@ -76,10 +61,6 @@ autocmd BufNewFile,BufRead *.py	set autoindent noexpandtab tabstop=4 shiftwidth=
 
 " Disable text wrapping
 autocmd BufNewFile,BufRead *.py	set nowrap
-
-
-" LaTeX settings
-autocmd BufNewFile,BufRead *.tex source $HOME/.config/nvim/LaTeX.vim
 
 " Markdown settings
 autocmd BufNewFile,BufRead *.md source $HOME/.config/nvim/markdown.vim
