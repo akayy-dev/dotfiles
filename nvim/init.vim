@@ -62,9 +62,6 @@ autocmd BufNewFile,BufRead *.py	set autoindent noexpandtab tabstop=4 shiftwidth=
 " Disable text wrapping
 autocmd BufNewFile,BufRead *.py	set nowrap
 
-" Markdown settings
-autocmd BufNewFile,BufRead *.md source $HOME/.config/nvim/markdown.vim
-
 " Programmer Mode
 command ProgrammerMode :5sp +terminal | :NERDTreeToggle
 
