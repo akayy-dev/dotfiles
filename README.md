@@ -6,5 +6,7 @@ In here you will find my dotfiles for
 - nvim
 - qtile
 - ranger
-- ulauncher
+- sxhkd
+- bspwm
+- kitty
 - and zathura
