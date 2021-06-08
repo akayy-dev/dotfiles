@@ -9,4 +9,5 @@ In here you will find my dotfiles for
 - sxhkd
 - bspwm
 - kitty
+- polybar
 - and zathura
