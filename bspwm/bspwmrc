@@ -1,6 +1,6 @@
 #! /bin/sh
 
-bspc config borer_width 0
+
 
 # Authentucation Agent
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 & 
@@ -9,9 +9,11 @@ bspc config borer_width 0
 pgrep -x picom > /dev/null || picom &
 pgrep -x sxhkd > /dev/null || sxhkd &
 
+pgrep -x emacs > /dev/null || emacs --daemon &
 bspc monitor -d I II III IV V VI VII
 
 
+bspc config border_width 0
 bspc config window_gap 15
 
 bspc rule -a Screenkey manage=off
@@ -30,6 +32,7 @@ bspc rule -a Emacs state=tiled
 bspc rule -a timeshift-gtk state=floating
 bspc rule -a Timeshift-gtk state=floating
 bspc rule -a Zathura state=tiled
+bspc rule -a Ulauncher state=floating
 
 
 
