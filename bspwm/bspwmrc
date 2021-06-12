@@ -18,6 +18,9 @@ bspc config window_gap 15
 
 bspc rule -a Screenkey manage=off
 
+# Clean fullscreen
+$HOME/.config/bspwm/cleanfullscreen
+
 # Time Specifc Wallpaper
 python3 $HOME/.config/bspwm/wallpapers.py
 
