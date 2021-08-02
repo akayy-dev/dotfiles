@@ -7,6 +7,6 @@ currenttime = datetime.now().time()
 
 # DATETIME USES 24 HOUR TIME
 if currenttime.hour >= 21 or currenttime.hour < 7:
-	os.system('feh --bg-fill $HOME/Pictures/.wallpapers/bigsur_night.jpg')
+	os.system('feh --bg-fill $HOME/.config/wallpapers/catalina/nighttime.jpg')
 else:
-	os.system('feh --bg-fill $HOME/Pictures/.wallpapers/bigsur_day.jpg')
+	os.system('feh --bg-fill $HOME/.config/wallpapers/catalina/daytime.jpg')
