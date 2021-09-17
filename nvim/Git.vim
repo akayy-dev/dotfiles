@@ -8,13 +8,14 @@ nnoremap <leader>gb :Git branch<CR>:sleep 1<CR>:quit<CR>
 nnoremap <leader>gbc :Git branch 
 
 " Git Checkout
-nnoremap <leader>gcb :Git checkout 
+nnoremap <leader>gbc :Git checkout 
 
-" Git Commit
-nnoremap <leader>gc :Git commit -m "
 
 " Git Add
-nnoremap <leader>ga :Git add %<CR>:echo "Added file!"<CR>
+nnoremap <leader>gfs :Git add %<CR> <ESC> :echo "Added file!"<CR>
+
+" Git Commit
+nnoremap <leader>gcc :Git commit -m "
 
 " Git Push
-nnoremap <leader>gp :Git push<CR>
+nnoremap <leader>gcp :Git push<CR>
