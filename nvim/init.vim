@@ -2,9 +2,6 @@
 " | '_ \ / _ \/ _ \ \ / / | '_ ` _ \   / __/ _ \| '_ \| |_| |/ _` |
 " | | | |  __/ (_) \ V /| | | | | | | | (_| (_) | | | |  _| | (_| |
 " |_| |_|\___|\___/ \_/ |_|_| |_| |_|  \___\___/|_| |_|_| |_|\__, |
-"                                                             |___/
-
-
 
 " Enable Vim-Plug
 call plug#begin('~/.vim/plugins/')
@@ -12,6 +9,12 @@ call plug#begin('~/.vim/plugins/')
 " Airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+
+
+" Telescope
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
 " Coc Language Integration (plan to switch to lsp when it's more developed)
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -21,16 +24,20 @@ Plug 'ervandew/supertab'
 " Tab chooses the first result instead of the last (the default behavior)
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
+" Auto pairing
+Plug 'jiangmiao/auto-pairs'
 
 " Treesitter (things like better syntax highlighting)
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 Plug 'nvim-treesitter/playground'
 
 " Tmux Integration
+"" Window Navigation
 Plug 'christoomey/vim-tmux-navigator'
+"" Sending Commands
+Plug 'preservim/vimux'
 
-
-"NERDTree + Icons
+" NERDTree + Icons
 Plug 'scrooloose/nerdtree'
 Plug 'ryanoasis/vim-devicons'
 
@@ -57,30 +64,30 @@ nmap <C-j> <C-w>j
 nmap <C-k> <C-w>k
 nmap <C-l> <C-w>l
 
-"Toggle NERDTree
-nnoremap <space>p :NERDTreeToggle<CR>
-
-"Toggle line numbers
-noremap <space>n :set number!<CR>
-
 " Colorscheme
 colorscheme snazzy
 
 " Transparent background
 hi Normal guibg=NONE ctermbg=NONE
 
-" Configure Git
-source $HOME/.config/nvim/Git.vim
 
 " Exit if NERDTree is the only window left.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
     \ quit | endif
 
-" Python settings
+" Sourcing Files
+"" Configure Git
+source $HOME/.config/nvim/Git.vim
+"" Python settings
 autocmd BufNewFile,BufRead *.py source $HOME/.config/nvim/code/python.vim
+"" Coc Settings
+source $HOME/.config/nvim/coc.vim
+"" Key Remaps
+source $HOME/.config/nvim/remaps.vim
+
 
 " Programmer Mode
-command ProgrammerMode :5sp +terminal | :NERDTreeToggle
+command ProgrammerMode :VimuxOpenRunner | :NERDTreeToggle
 
 " Disable highlighting when searching with /
 set nohlsearch
