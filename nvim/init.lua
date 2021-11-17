@@ -8,13 +8,15 @@ require('plugins/nvim-compe') -- Compe
 require('keymaps/general')
 require('keymaps/telescope')
 require('keymaps/nvim-tree')
+require('keymaps/lsp')
 
 -- Code
-require('code/general')
-vim.cmd('autocmd BufNewFile,BufRead *.py lua require(\'code/python\')')
+vim.cmd("autocmd BufNewFile,BufRead *.py lua require('code/python')")
+require('plugins/lsprocks')
+require('plugins/treesitter')
+
+
 
 -- Appearance
 require('appearance/theme')
-
-
-
+require('appearance/general')

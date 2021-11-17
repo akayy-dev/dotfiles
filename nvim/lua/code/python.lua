@@ -1,3 +1,4 @@
+vim.o.expandtab = false -- Fucking stupid command won't work
 vim.opt.wrap = false
 vim.opt.number = true
 vim.opt.autoindent = true
