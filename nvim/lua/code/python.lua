@@ -8,4 +8,6 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth= 4
 
 -- LSP
-require'lspconfig'.pyright.setup{}
+require'lspconfig'.pyright.setup{
+	single_file_support = true,
+}
