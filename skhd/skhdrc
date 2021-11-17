@@ -1,16 +1,6 @@
 # Open Terminal
-shift + cmd - i : /Applications/iTerm.app/Contents/MacOS/iTerm2
-
-#Open Atom Editor
-shift + cmd - u : atom
-
-# Open Visual Studio Code
-shift + cmd - v : open -a Visual\ Studio\ Code
-
-#Open Neovim
-shift + cmd - n : /Applications/iTerm.app/Contents/MacOS/iTerm2 nvim
+rshift + cmd - i : /Applications/iTerm.app/Contents/MacOS/iTerm2
 
 # Open Ranger
-shift + cmd - p : /Applications/iTerm.app/Contents/MacOS/iTerm2 ranger
-
+rshift + cmd - p : /Applications/iTerm.app/Contents/MacOS/iTerm2 ranger
 
