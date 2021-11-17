@@ -1,4 +1,5 @@
 require('packer').startup(function()
+	use 'wbthomason/packer.nvim'            -- Packer (likes uninstalling itself)
 	use 'neovim/nvim-lspconfig'             -- LSP
 	use 'hrsh7th/nvim-compe'                -- LSP Completion Framework
 	use 'glepnir/lspsaga.nvim'              -- LSP Frontend
