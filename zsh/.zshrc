@@ -19,7 +19,7 @@ ZSH_THEME="robbyrussell"
 
 
 # Which plugins would you like to load?
-plugins=(git zsh-syntax-highlighting tmux)
+plugins=(git zsh-syntax-highlighting tmux zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
