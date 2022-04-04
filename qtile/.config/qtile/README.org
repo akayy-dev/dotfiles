@@ -1,0 +1,281 @@
+#+TITLE:Qtile Config
+#+PROPERTY: header-args :tangle test.py
+
+* Introduction
+Qtile is a dynamic window manager for Linux. What makes it unique is that it's written in Python, allowing for a wide range of customizability and integration with other libraries.
+
+* Imports
+Qtile is configured in python, so naturally we need a ton of imports to ensure the configuration works properly.
+
+#+begin_src python
+  from libqtile import bar, layout, widget, extension, hook
+  from libqtile.config import Click, Drag, Group, Key, Match, Screen, KeyChord
+  from libqtile.lazy import lazy
+  from libqtile.utils import guess_terminal
+
+  import os
+  import subprocess
+#+end_src
+
+* Configure Variables
+Before you can get to /really/ configuring Qtile, you need to set up a few variables.
+
+- ~MOD~::
+  What should the modifier key be for this config? I obviously set it to mod4, or the Windows Key
+- ~TERM~::
+  Sets the default terminal, the ~guess_terminal~ method guesses it which takes away the hassle of trying to configure Qtile for systems that use different terminals.
+- ~BROWSER~::
+  Self explanatory, sets the default browser.
+
+#+begin_src python
+MOD = "mod4"
+TERM = guess_terminal()
+BROWSER = 'brave'
+#+end_src
+
+* Keybinds
+The most important part of the config, Keybinds are managed with the ~keys~ variable.
+#+begin_src python
+  keys = [
+                  # A list of available commands that can be bound to keys can be found
+                  # at https://docs.qtile.org/en/latest/manual/config/lazy.html
+                  # Switch between windows
+                  Key([MOD], "h", lazy.layout.left(), desc="Move focus to left"),
+                  Key([MOD], "l", lazy.layout.right(), desc="Move focus to right"),
+                  Key([MOD], "j", lazy.layout.down(), desc="Move focus down"),
+                  Key([MOD], "k", lazy.layout.up(), desc="Move focus up"),
+                  # Move windows between left/right columns or move up/down in current stack.
+                  # Moving out of range in Columns layout will create new column.
+                  Key([MOD, "shift"], "h", lazy.layout.shuffle_left(),
+                          desc="Move window to the left"),
+                  Key([MOD, "shift"], "l", lazy.layout.shuffle_right(),
+                          desc="Move window to the right"),
+                  Key([MOD, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
+                  Key([MOD, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
+                  # Toggle between split and unsplit sides of stack.
+                  # Split = all windows displayed
+                  # Unsplit = 1 window displayed, like Max layout, but still with
+                  # multiple stack panes
+                  Key(
+                                  [MOD, "shift"],
+                                  "Return",
+                                  lazy.layout.toggle_split(),
+                                  desc="Toggle between split and unsplit sides of stack",
+                  ),
+                  Key([MOD], "Return", lazy.spawn(TERM), desc="Launch terminal"),
+                  # Toggle between different layouts as defined below
+                  Key([MOD], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
+                  Key([MOD, "shift"], "q", lazy.window.kill(), desc="Kill focused window"),
+                  Key([MOD, "shift"], "e", lazy.reload_config(), desc="Reload the config"),
+                  Key([MOD, "shift"], "w", lazy.shutdown(), desc="Shutdown Qtile"),
+
+
+                  # Open Apps
+                  Key([MOD], "t", lazy.spawn(BROWSER), desc="Open Browser"),
+                  Key([MOD], "p", lazy.spawn(f"{TERM} -e ranger"), desc="Open Ranger"),
+
+          # Dmenu Runner
+                  Key([MOD], "d", lazy.run_extension(extension.DmenuRun(
+                          dmenu_ignorecase=True,
+                          dmenu_prompt="dmenu:",
+                          font="Hack Nerd Font Mono Bold"
+                  ))),
+                  # Toggle Ulauncher
+                  Key([MOD], "space", lazy.spawn("ulauncher-toggle"), desc="Toggle Ulauncher"),
+          # Volume Keys
+                  Key([], "XF86AudioRaiseVolume", lazy.spawn(
+                                  "pulseaudio-ctl up 2"), desc="Volume Up"),
+                  Key([], "XF86AudioLowerVolume", lazy.spawn(
+                                  "pulseaudio-ctl down 2"), desc="Volume Down"),
+                                  Key([], "XF86AudioMute", lazy.spawn(
+                                                  "pulseaudio-ctl mute"), desc="Volume Mute"),
+                  # Brightness Keys
+                  Key([], "XF86MonBrightnessUp", lazy.spawn(
+                                  "light -A 5"), desc="Raise Brightness"),
+                  Key([], "XF86MonBrightnessDown", lazy.spawn(
+                                  "light -U 5"), desc="Lower Brightness"),
+
+                  # Floating Toggle
+                  Key([MOD], "s", lazy.window.toggle_floating(), desc="Toggle floating"),
+
+                  # Resize Mode
+                  KeyChord([MOD], "r", [
+                          Key([], "l", lazy.layout.grow_right()),
+                          Key([], "h", lazy.layout.grow_left()),
+                          Key([], "j", lazy.layout.grow_down()),
+                          Key([], "k", lazy.layout.grow_up()),
+                          Key([], "n", lazy.layout.normalize())],
+                  mode="Resize"
+                          )]
+#+end_src
+
+* Groups
+More commonly known as workspaces among other window managers.
+
+** Create Groups
+Create 7 individual groups.
+#+begin_src python
+groups = [Group(i) for i in "1234567"]
+#+end_src
+
+** Group Keybindings
+Now create a group of keybinds to navigate between groups.
+#+begin_src python
+  for i in groups:
+                  keys.extend(
+                          [
+                                  # mod1 + letter of group = switch to group
+                                  Key(
+                                          [MOD],
+                                          i.name,
+                                          lazy.group[i.name].toscreen(),
+                                          desc="Switch to group {}".format(i.name)),
+                                  # mod1 + shift + letter of group = move focused window to group
+                                  Key(
+                                          [MOD, "shift"],
+                                          i.name,
+                                          lazy.window.togroup(i.name, switch_group=False),
+                                          desc="Switch to & move focused window to group {}".format(i.name)),
+                          ]
+          )
+#+end_src
+
+* Layouts
+Uncomment one of the lines to try out a layout.
+#+begin_src python
+  layouts = [
+          layout.Columns(
+                  border_focus_stack=["#d75f5f", "#8f3d3d"],
+                  border_normal_stack="#FF0000",
+                  border_width=1,
+                  margin=10,
+                  margin_on_single=15),
+          layout.Max(),
+          # Try more layouts by unleashing below layouts.
+          # layout.Stack(num_stacks=2),
+          # layout.Bsp(),
+          # layout.Matrix(),
+          # layout.MonadTall(),
+          # layout.MonadWide(),
+          # layout.RatioTile(),
+          # layout.Tile(),
+          # layout.TreeTab(),
+          # layout.VerticalTile(),
+          # layout.Zoomy(),
+  ]
+#+end_src
+
+** Floating Windows
+Manage floating windows with the mouse
+#+begin_src python
+mouse = [
+	Drag([MOD], "Button1", lazy.window.set_position_floating(),
+            start=lazy.window.get_position()),
+	Drag([MOD], "Button3", lazy.window.set_size_floating(),
+            start=lazy.window.get_size()),
+	Click([MOD], "Button2", lazy.window.bring_to_front()),
+]
+#+end_src
+
+** Floating Rules
+Which windows should float.
+#+begin_src python
+  floating_layout = layout.Floating(
+          float_rules=[
+                  # Run the utility of `xprop` to see the wm class and name of an X client.
+                  ,*layout.Floating.default_float_rules,
+                  Match(wm_class="confirmreset"),  # gitk
+                  Match(wm_class="makebranch"),  # gitk
+                  Match(wm_class="maketag"),  # gitk
+                  Match(wm_class="ssh-askpass"),  # ssh-askpass
+                  Match(title="branchdialog"),  # gitk
+                  Match(title="pinentry"),  # GPG key password entry
+          ]
+  )
+#+end_src
+
+
+
+* Widgets
+Widgets to show on the bar.
+** Widget Defaults
+Default settings like padding and font details.
+#+begin_src python
+  widget_defaults = {
+          "font": "Hack Nerd Font Mono Bold",
+          "fontsize": 15,
+          "padding": 8,
+          }
+  extension_defaults = widget_defaults.copy()
+#+end_src
+** Bar Widgets
+#+begin_src python
+  screens = [
+          Screen(
+                  top=bar.Bar(
+                          [
+                                  widget.CurrentLayout(),
+                                  widget.GroupBox(
+                                          highlight_method="line",
+                                          urgent_border="#f54242",
+                                  ),
+                                  widget.Prompt(),
+                                  widget.WindowName(
+                                          padding=5,
+                                          max_chars=10
+                                  ),
+                                  widget.Chord(
+                                          chords_colors={
+                                                  "launch": ("#ff0000", "#ffffff"),
+                                          },
+                                          name_transform=lambda name: name.upper(),
+                                  ),
+                                  widget.Systray(padding=3),
+                                  widget.Sep(padding=10),
+                                  widget.Volume(fmt="Vol: {}"),
+                                  widget.Backlight(
+                                          backlight_name="intel_backlight",
+                                          fmt="Brightness: {}"
+                                  ),
+                                  widget.Clock(format="%a %B %e %I:%M %p"),
+                                  widget.QuickExit(default_text=""),
+                          ],
+                  ),
+          ),
+  ]
+#+end_src
+* Misc Settings
+Settings that either came with the default config and I didn't know what they did, or don't know how to categorize.
+
+#+begin_src python
+  dgroups_key_binder = None
+  dgroups_app_rules = []  # type: list
+  follow_mouse_focus = True
+  bring_front_click = False
+  cursor_warp = False
+  auto_fullscreen = True
+  focus_on_window_activation = "smart"
+  reconfigure_screens = True
+
+
+  # If things like steam games want to auto-minimize themselves when losing
+  # focus, should we respect this or not?
+  auto_minimize = True
+
+  # When using the Wayland backend, this can be used to configure input devices.
+  wl_input_rules = None
+
+  # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
+  # java that happens to be on java's whitelist.
+  wmname = "LG3D"
+#+end_src
+* Hooks
+Automatically run code when certain events happen using hooks.
+#+begin_src python
+  @hook.subscribe.startup_once
+  def autostart():
+          home = os.path.expanduser('~/.config/qtile/autostart.sh')
+          subprocess.run([home])
+#+end_src
+
+
