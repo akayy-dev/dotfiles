@@ -1,0 +1,37 @@
+# change window focus within space
+alt - j : yabai -m window --focus south
+alt - k : yabai -m window --focus north
+alt - h : yabai -m window --focus west
+alt - l : yabai -m window --focus east
+
+# change focus between external displays (left and right)
+alt - s: yabai -m display --focus west
+alt - g: yabai -m display --focus east
+
+# maximize a window
+alt - m : yabai -m window --toggle zoom-fullscreen
+
+# balance out tree of windows (resize to occupy same area)
+shift + alt - e : yabai -m space --balance
+
+# swap windows
+shift + alt - j : yabai -m window --swap south
+shift + alt - k : yabai -m window --swap north
+shift + alt - h : yabai -m window --swap west
+shift + alt - l : yabai -m window --swap east
+
+# move window to space #
+shift + alt - 1 : yabai -m window --space 1;
+shift + alt - 2 : yabai -m window --space 2;
+
+# stop/start/restart yabai
+alt + shift - q : yabai --stop-service
+# ctrl + shift - s : brew services start yabai
+alt + shift - e : yabai --restart-service
+
+
+# float window
+alt + shift - s : yabai -m window --toggle float
+
+# Open Apps
+alt + shift - i : open -n /Applications/iTerm.app/
