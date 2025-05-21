@@ -97,8 +97,11 @@ automatically-unhide-macos-hidden-apps = false
     # '''
 
 	# Applications
-	alt-shift-cmd-ctrl-t = "exec-and-forget open -na /Applications/Brave\\ Browser.app/"
+	alt-shift-cmd-ctrl-t = "exec-and-forget open -n /Applications/Brave\\ Browser.app/"
 	alt-shift-cmd-ctrl-enter = "exec-and-forget open -na /Applications/iTerm.app/"
+
+	# toggle floating window
+	alt-shift-cmd-ctrl-s = "layout floating tiling"
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#layout
     alt-m = 'layout accordion tiles'
@@ -162,3 +165,19 @@ automatically-unhide-macos-hidden-apps = false
     down = 'volume down'
     up = 'volume up'
     shift-down = ['volume set 0', 'mode main']
+
+
+
+# Multiple Monitor Configuration
+[workspace-to-monitor-force-assignment]
+	E = 'secondary'
+
+[[on-window-detected]]
+if.app-id = "com.mitchellh.ghostty"
+run = [
+  # FIX: this is a workaround for https://github.com/nikitabobko/AeroSpace/issues/68
+  # this was also observed in:
+  # - https://github.com/ghostty-org/ghostty/issues/1840
+  # - https://github.com/ghostty-org/ghostty/issues/2006
+  "layout floating",
+]
